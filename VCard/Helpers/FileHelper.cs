@@ -17,6 +17,7 @@ namespace VCard.Helpers
         const string EmailPrefix = "EMAIL:";
         const string Footer = "END:VCARD";
 
+        //RandomUser Api - den user cekmek
         public static VCardModel GetDataFromApi()
         {
             try
@@ -28,7 +29,7 @@ namespace VCard.Helpers
                     var responseStream = response.Content.ReadAsStringAsync().Result;
                     var responseData = JsonConvert.DeserializeObject<RandomUserResponseModel>(responseStream);
 
-                    var data = responseData.Results.GetRange(0, 1).FirstOrDefault();
+                    var data = responseData.Results.FirstOrDefault();
 
                     vCard = new()
                     {
@@ -48,6 +49,8 @@ namespace VCard.Helpers
                 return null;
             }
         }
+
+        //modeli VCard formatina ceviren metod
         public static ResponseModel CreateVCard(VCardModel vCard)
         {
             ResponseModel responseModel = new();
@@ -111,14 +114,18 @@ namespace VCard.Helpers
                 return responseModel;
             }
         }
+
+        // .vcf faylini save etmek 
         public static ResponseModel SaveVCard(string vcardContents)
         {
             ResponseModel responseModel = new();
             try
             {
-                //string folderName = "Files";
-                string fileName = $"vCard_{DateTime.Now:yyyyMMdd_HHmmss}.vcf";
-                string filePath = Path.Combine("C:\\Code_Academy\\VCard\\VCard\\Files", fileName);
+                string projectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+                string folderPath = Path.Combine(projectPath, "Files");
+
+                string fileName = $"vCard_{DateTime.Now:yyyyMMdd_HHmmss}_{Guid.NewGuid()}.vcf";
+                string filePath = Path.Combine(folderPath, fileName);
 
                 File.WriteAllText(filePath, vcardContents);
 

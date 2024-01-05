@@ -1,0 +1,7 @@
+BEGIN:VCARD
+VERSION:2.1
+N:Anttila;Emmi;
+TEL;,VOICE:05-184-410
+EMAIL:emmi.anttila@example.com
+ADR;:;;Finland;Pirkkala
+END:VCARD

@@ -7,24 +7,30 @@ class Program
     public static void Main()
     {
         var vCard = FileHelper.GetDataFromApi();
-        if (vCard is not null)
-        {
-            var responseCreate = FileHelper.CreateVCard(vCard);
-            if (responseCreate.IsSuccess)
-            {
-                Console.WriteLine(responseCreate.Message);
+        Console.WriteLine("Yaratmaq istediyiniz VCard sayini daxil edin : ");
+        int countVCard = int.Parse(Console.ReadLine());
 
-                var responseSave = FileHelper.SaveVCard(responseCreate.Data);
-                Console.WriteLine(responseSave.Message);
+        for (int i = 0; i < countVCard; i++)
+        {
+            if (vCard is not null)
+            {
+                var responseCreate = FileHelper.CreateVCard(vCard);
+                if (responseCreate.IsSuccess)
+                {
+                    Console.WriteLine(responseCreate.Message);
+
+                    var responseSave = FileHelper.SaveVCard(responseCreate.Data);
+                    Console.WriteLine(responseSave.Message);
+                }
+                else
+                {
+                    Console.WriteLine(responseCreate.Message);
+                }
             }
             else
             {
-                Console.WriteLine(responseCreate.Message);
+                Console.WriteLine("Məlumat tapılmadı.");
             }
-        }
-        else
-        {
-            Console.WriteLine("Məlumat tapılmadı.");
         }
     }
 }
